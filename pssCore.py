@@ -90,7 +90,7 @@ class Main(QMainWindow, graphics):
 		self.data_view.clear()
 		self.data_view.setStyleSheet("QHeaderView::section{Background-color:rgb(0, 102, 0);}")
 		for k, v in solved.counter.items():
-			child = TreeWidgetItem([case_sort(k[::-1]), str((v/solved.total_outcomes*100))])
+			child = TreeWidgetItem([sort_by_case(k[::-1]), str((v/solved.total_outcomes*100))])
 			self.data_view.addTopLevelItem(child)
 
 		self.data_view.header().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -99,7 +99,7 @@ class Main(QMainWindow, graphics):
 		self.data_view.setEnabled(True)
 
 		# label that displays the genetic cross
-		self.cross_label.setText("Cross: {0} x {1}".format(case_sort(self.f1_genes), case_sort(self.f2_genes)))
+		self.cross_label.setText("Cross: {0} x {1}".format(sort_by_case(self.f1_genes), sort_by_case(self.f2_genes)))
 		self.cross_label.setStyleSheet("color:rgb(0, 102, 0);")
 		self.cross_label.setEnabled(True)
 

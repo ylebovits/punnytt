@@ -11,15 +11,13 @@ from PyQt5.QtWidgets import (QTreeWidgetItem, QMainWindow, QApplication,
 	QTableWidgetItem, QHeaderView, QSplashScreen, QProgressBar)
 
 
-""" sorts string by case, not by letter """
-def case_sort(string, length = 2):
-	lists = [string[i:i + 2] for i in range(0, len(string), 2)]
+""" breaks string into pairs of two consecutive characters and sorts them by case """
+def sort_by_case(string):
+	# break down string ever two chars
+	chars = [string[i:i + 2] for i in range(0, len(string), 2)]
 
-	for lst in lists:
-		lists[lists.index(lst)] = "".join(
-			sorted(list(lst), key = lambda L: (L.lower(), L)))
-
-	return "".join(lists)
+	# sort two character strings by case
+	return "".join("".join(sorted(list(char), key=lambda L: (L.lower(), L))) for char in chars)
 
 # verifies that each letter type in the inputs occurs only twice, otherwise it won"t solve
 def validate_letters(first_string, second_string):
@@ -52,7 +50,6 @@ def validate(state, first_string, second_string):
 
 	return state
 
-
 class visualThread(QThread):
 
 	thread_signal = pyqtSignal(list)
@@ -68,7 +65,7 @@ class visualThread(QThread):
 	def run(self):
 		for y in range(len(self.solved.axis[0])):
 			for x in range(len(self.solved.axis[0])):
-				self.thread_signal.emit([x, y, str(case_sort(self.solved.solved_array[x][y][::-1]))])
+				self.thread_signal.emit([x, y, str(sort_by_case(self.solved.solved_array[x][y][::-1]))])
 				QApplication.processEvents()
 
 class solveThread(QThread):
@@ -89,7 +86,6 @@ class solveThread(QThread):
 		self.button.setEnabled(True)
 		self.button.setText("Solve!")
 		self.thread_signal.emit(solved)
-
 
 class TreeWidgetItem(QTreeWidgetItem):
     """
