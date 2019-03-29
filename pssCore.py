@@ -55,7 +55,6 @@ class Main(QMainWindow, graphics):
 		self.f1_input.setStyleSheet("QLineEdit { background-color: %s }" % color)
 		self.f2_input.setStyleSheet("QLineEdit { background-color: %s }" % color)
 
-    # because fuck Qt
 	# we don't update GUI thread from worker thread
 	def update_view(self, data):
 		self.punnett_square_view.setItem(data[0], data[1], QTableWidgetItem(data[2]))
